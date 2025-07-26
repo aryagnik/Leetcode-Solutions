@@ -15,7 +15,7 @@ class Solution {
         }
 
         if (flag == 1) {
-            if (nums[nums.length - 1] < nums[0]) {
+            if (nums[nums.length - 1] <= nums[0]) {
                 return true;
             }
         }
