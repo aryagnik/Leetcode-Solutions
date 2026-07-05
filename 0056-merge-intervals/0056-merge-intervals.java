@@ -1,100 +1,43 @@
-import java.util.Arrays;
-import java.util.HashMap;
+import java.util.*;
 
 class Solution {
     public int[][] merge(int[][] intervals) {
         Arrays.sort(intervals,(a,b)->{
-            if(a[0] == b[0]){
-                return a[1]-b[1];
-            }
-            else{
-                return a[0]-b[0];
-            }
+            return a[0] - b[0];
         });
 
-        for(int i=0; i<intervals.length; i++){
-            for(int j=0; j<2; j++){
-                System.out.print(intervals[i][j]);
-            }
-            System.out.println();
-        }
-
         ArrayList<ArrayList<Integer>> l1 = new ArrayList<>();
-
-        int prevStart = -1, prevEnd = -1;
-
         int f = 0;
 
-        // System.out.println(intervals.length);
-
         for(int i=0; i<intervals.length; i++){
-            
-            int start = intervals[i][0];
-            int end = intervals[i][1];
-
-            System.out.print(start);
-            System.out.println(end);
-
-            if(i == 0){
+            if(l1.isEmpty() || intervals[i][0] > l1.get(f-1).get(1)){
                 ArrayList<Integer> l2 = new ArrayList<>();
 
-                l2.add(start);
-                l2.add(end);
+                l2.add(intervals[i][0]);
+                l2.add(intervals[i][1]);
 
                 l1.add(l2);
 
-                prevStart = start;
-                prevEnd = end;
                 f++;
             }
             else{
+                f--;
+                int ans = Math.max(l1.get(f).get(1),intervals[i][1]);
 
-                if(start <= prevEnd){
-                    if(end <= prevEnd){
-                        continue;
-                    }
-                    else{
-                        f--;
-                        l1.remove(f);
-                        ArrayList<Integer> l2 = new ArrayList<>();
-
-                        l2.add(prevStart);
-                        l2.add(end);
-
-                        l1.add(l2);
-                        f++;
-
-                        prevStart = prevStart;
-                        prevEnd = end;
-                    }
-                }
-                else{
-                    ArrayList<Integer> l2 = new ArrayList<>();
-
-                    System.out.println("YES");
-
-                    l2.add(start);
-                    l2.add(end);
-
-                    l1.add(l2);
-                    f++;
-
-                    prevStart = start;
-                    prevEnd = end;
-                }
+                l1.get(f).set(1,ans);
+                f++;
             }
         }
 
-        System.out.println(l1);
-
-        int[][] arr = new int[l1.size()][2];
+        int[][] arr1 = new int[l1.size()][2];
 
         for(int i=0; i<l1.size(); i++){
-            for(int j=0; j<2; j++){
-                arr[i][j] = l1.get(i).get(j);
+            for(int j=0 ; j<2; j++){
+                arr1[i][j] = l1.get(i).get(j);
             }
         }
 
-        return arr;
+        return arr1;
+
     }
 }
