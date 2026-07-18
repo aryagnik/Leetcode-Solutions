@@ -19,7 +19,7 @@ class Solution {
         while(low<=high){
             int mid = (low) + (high-low)/2;
 
-            int sum = 0;
+            long sum = 0;
 
             for(int i=0; i<arr.length; i++){
                 sum += (arr[i] + mid - 1)/mid;
