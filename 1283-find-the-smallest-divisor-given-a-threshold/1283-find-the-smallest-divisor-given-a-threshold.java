@@ -22,7 +22,7 @@ class Solution {
             int sum = 0;
 
             for(int i=0; i<arr.length; i++){
-                sum += Math.ceil((double)arr[i]/(double)mid);
+                sum += (arr[i] + mid - 1)/mid;
             }
 
             System.out.println(mid+","+sum);
