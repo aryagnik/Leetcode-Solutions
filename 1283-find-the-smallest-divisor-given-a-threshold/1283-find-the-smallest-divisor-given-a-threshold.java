@@ -1,18 +1,16 @@
 class Solution {
 
-    public static int[] findMax(int[] nums){
-        int min = nums[0];
+    public static int findMax(int[] nums){
         int max = nums[0];
 
         for(int i=1; i<nums.length; i++){
-            if(nums[i]<min)min = nums[1];
             if(nums[i]>max)max = nums[i];
         }
 
-        return new int[]{min,max};
+        return max;
     }
 
-    public static int findAns(int[] arr, int min, int max, int k){
+    public static int findAns(int[] arr, int max, int k){
         int low = 1;
         int high = max;
 
@@ -43,12 +41,9 @@ class Solution {
     }
 
     public int smallestDivisor(int[] nums, int threshold) {
-        int[] arr1 = findMax(nums);
+        int max = findMax(nums);
 
-        int min = arr1[0];
-        int max = arr1[1];
-
-        int ans = findAns(nums,min,max,threshold);
+        int ans = findAns(nums,max,threshold);
 
         return ans;
     }
