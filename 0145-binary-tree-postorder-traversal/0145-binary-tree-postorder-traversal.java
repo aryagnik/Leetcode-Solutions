@@ -16,28 +16,28 @@
 class Solution {
     public List<Integer> postorderTraversal(TreeNode root) {
         Stack<TreeNode> st1 = new Stack<>();
-        Stack<TreeNode> st2 = new Stack<>();
-
         ArrayList<Integer> l1 = new ArrayList<>();
 
-        if(root == null)return l1;
+        TreeNode prev = null;
 
-        st1.add(root);
-
-        while(!(st1.isEmpty())){
-            root = st1.pop();
-            st2.add(root);
-
-            if(root.left != null){
-                st1.add(root.left);
+        while(root != null || !(st1.isEmpty())){
+            while(root != null){
+                st1.push(root);
+                root = root.left;
             }
-            if(root.right != null){
-                st1.add(root.right);
-            }
-        }
 
-        while(!(st2.isEmpty())){
-            l1.add(st2.pop().val);
+            root = st1.peek();
+
+            if(root.right != null && root.right != prev){
+                root = root.right;
+            }
+            else{
+                System.out.println("yes");
+                l1.add(root.val);
+                st1.pop();
+                prev = root;
+                root = null;
+            }
         }
 
         return l1;
