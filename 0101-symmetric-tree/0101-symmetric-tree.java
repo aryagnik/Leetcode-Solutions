@@ -14,41 +14,18 @@
  * }
  */
 class Solution {
+    public static boolean optimal(TreeNode p, TreeNode q){
+        if(p == q)return true;
+
+        if((p == null && q != null) || (p != null && q == null))return false;
+
+        if(p.val != q.val)return false;
+
+        return (optimal(p.left,q.right) && (optimal(p.right,q.left)));
+    }
     public boolean isSymmetric(TreeNode root) {
-        Queue<TreeNode> q1 = new LinkedList<>();
+        if(root == null)return true;
 
-        q1.add(root);
-
-        while(!q1.isEmpty()){
-            int size = q1.size();
-            ArrayList<Integer> l1 = new ArrayList<>();
-
-            for(int i=0; i<size; i++){
-                TreeNode root1 = q1.poll();
-
-                if(root1 == null){
-                    l1.add(null);
-                    continue;
-                }
-                else{
-                    l1.add(root1.val);
-                    q1.add(root1.left);
-                    q1.add(root1.right);
-                }
-            }
-
-            int i = 0;
-            int j = l1.size()-1;
-
-            while(i<=j){
-                if(l1.get(i) != l1.get(j)){
-                    return false;
-                }
-                i++;
-                j--;
-            }
-        }
-
-        return true;
+        return optimal(root.left,root.right);
     }
 }
